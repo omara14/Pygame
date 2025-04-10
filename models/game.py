@@ -13,6 +13,8 @@ class Game:
         self.create_aliens()
         self.aliens_direction = 1
         self.alien_missiles_group = pygame.sprite.Group()
+        self.lives = 3
+        self.run = True
 
     def create_aliens(self):
         for row in range(5):
@@ -50,21 +52,27 @@ class Game:
     def alien_shoot_missiles(self):
         if self.aliens_group.sprites():
             random_alien = random.choice(self.aliens_group.sprites())
-            missile_sprite = Missile(random_alien.rect.center, -3, self.screen_height) #-6 as we want it to move downwards at this speed
+            missile_sprite = Missile(random_alien.rect.center, -3, self.screen_height) #-3 as we want it to move downwards at this speed
             self.alien_missiles_group.add(missile_sprite)
 
     def check_collisions(self):
         #spacship check
         if self.spaceship_group.sprite.missiles_group:
             for missile_sprite in self.spaceship_group.sprite.missiles_group:
+                """aliens_hit = pygame.sprite.spritecollide(missile_sprite, self.aliens_group, True)
+                if aliens_hit:
+                    for alien in aliens_hit:
+                        self.score += alien.type * 10"""
+
                 if pygame.sprite.spritecollide(missile_sprite, self.aliens_group, True):
                     missile_sprite.kill()
+                    
                 
         #alien missiles check
         if self.alien_missiles_group:
-            for laser_sprite in self.alien_missiles_group:
-                if pygame.sprite.spritecollide(laser_sprite, self.spaceship_group, False):
-                    laser_sprite.kill()
+            for missile_sprite in self.alien_missiles_group:
+                if pygame.sprite.spritecollide(missile_sprite, self.spaceship_group, False):
+                    missile_sprite.kill()
                     print("Spaceship hit")
                     self.lives -= 1
                     if self.lives == 0:
@@ -77,6 +85,12 @@ class Game:
                     self.game_over()
 
     def game_over(self):
-        self.lives -= 1
-        print("Game Over")
+        self.run = False
         
+    def reset(self):
+        self.run = True
+        self.lives = 3
+        self.spaceship_group.sprite.reset()
+        self.aliens_group.empty()
+        self.alien_missiles_group.empty()
+        self.create_aliens()

@@ -10,3 +10,4 @@ class Alien(pygame.sprite.Sprite):
 
     def update(self, direction):
         self.rect.x += direction  # for movement of the aliens    
+    

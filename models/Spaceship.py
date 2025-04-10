@@ -46,3 +46,8 @@ class Spaceship(pygame.sprite.Sprite):
             current_time = pygame.time.get_ticks()
             if current_time - self.missile_time >= self.missiles_delay:
                 self.missile_ready = True
+
+
+    def reset(self):
+        self.rect = self.image.get_rect(midbottom = (self.screen_width/2, self. screen_height))
+        self.missiles_group.empty()
