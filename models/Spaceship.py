@@ -7,7 +7,7 @@ class Spaceship(pygame.sprite.Sprite):
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.image = pygame.image.load("images/spaceship.png")
-        self.rect = self.image.get_rect(midbottom = (self.screen_width/2, self.screen_height)) #ensures the sprites bottom/centre is aligned, making it ready to be displayed/interacted
+        self.rect = self.image.get_rect(midbottom = (self.screen_width/2, self.screen_height - 50)) #ensures the sprites bottom/centre is aligned, making it ready to be displayed/interacted
         self.speed = 7
         self.missiles_group = pygame.sprite.Group()
         self.missile_ready = True #Missile ready to be fired otherwise constant line of missiels is drawn
@@ -49,5 +49,5 @@ class Spaceship(pygame.sprite.Sprite):
 
 
     def reset(self):
-        self.rect = self.image.get_rect(midbottom = (self.screen_width/2, self. screen_height))
+        self.rect = self.image.get_rect(midbottom = (self.screen_width/2, self. screen_height - 50))
         self.missiles_group.empty()

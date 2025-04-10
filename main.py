@@ -6,13 +6,17 @@ pygame.init()
 
 SCREEN_WIDTH = 825
 SCREEN_HEIGHT = 770  # creating screen size and background colour
-OFFSET = 50
 
 GREY = (30, 30, 28)
 YELLOW = (240, 215, 60)
+RED = (255, 20, 20)
 
+font = pygame.font.SysFont('monogram', 40)
+level_surface = font.render("LEVEL 01", False, YELLOW)
+game_over_surface  = font.render("GAME OVER", False, RED)
+score_text_surface = font.render("SCORE", False, YELLOW)
 
-screen = pygame.display.set_mode((SCREEN_WIDTH + OFFSET, SCREEN_HEIGHT + 2*OFFSET)) #create a tuple for the screen
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) #create a tuple for the screen
 pygame.display.set_caption("Pygame Space Shooters")
 
 clock = pygame.time.Clock()
@@ -50,12 +54,27 @@ while True:
     
     #drawing
     screen.fill(GREY)
+
+    #ui
+    if game.run:
+            screen.blit(level_surface, (570, 740, 50, 50))
+    else:
+        screen.blit(game_over_surface, (570, 740, 50, 50))
+    
+    x = 50
+    for life in range(game.lives - 1):
+        screen.blit(game.spaceship_group.sprite.image, (x, 745))
+        x += 50
+
+    screen.blit(score_text_surface, (50, 15, 50, 50))
+    formatted_score = str(game.score).zfill(4)
+    score_surface = font.render(formatted_score, False, YELLOW)
+    screen.blit(score_surface, (50, 40, 50, 50))
+
     game.spaceship_group.draw(screen)
     game.spaceship_group.sprite.missiles_group.draw(screen)          #visual aspects
     game.aliens_group.draw(screen)
     game.alien_missiles_group.draw(screen)
-
-   
         
     pygame.display.update()
     clock.tick(60)    #ticks, determines speed of the game

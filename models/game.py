@@ -15,6 +15,7 @@ class Game:
         self.alien_missiles_group = pygame.sprite.Group()
         self.lives = 3
         self.run = True
+        self.score = 0
 
     def create_aliens(self):
         for row in range(5):
@@ -59,10 +60,12 @@ class Game:
         #spacship check
         if self.spaceship_group.sprite.missiles_group:
             for missile_sprite in self.spaceship_group.sprite.missiles_group:
-                """aliens_hit = pygame.sprite.spritecollide(missile_sprite, self.aliens_group, True)
+
+                aliens_hit = pygame.sprite.spritecollide(missile_sprite, self.aliens_group, True)
                 if aliens_hit:
                     for alien in aliens_hit:
-                        self.score += alien.type * 10"""
+                        self.score += alien.type * 10
+                        missile_sprite.kill()
 
                 if pygame.sprite.spritecollide(missile_sprite, self.aliens_group, True):
                     missile_sprite.kill()
@@ -94,3 +97,4 @@ class Game:
         self.aliens_group.empty()
         self.alien_missiles_group.empty()
         self.create_aliens()
+        self.score = 0
