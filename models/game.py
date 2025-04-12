@@ -3,11 +3,11 @@ from models.Spaceship import Spaceship
 from models.alien import Alien
 from models.missile import Missile
 
-class Game:
-    def __init__(self, screen_width, screen_height):
-        self.screen_width = screen_width
+class Game: 
+    def __init__(self, screen_width, screen_height):  #initialize all attributes of the game class
+        self.screen_width = screen_width #inheriting screen width from main section
         self.screen_height = screen_height
-        self.spaceship_group = pygame.sprite.GroupSingle()
+        self.spaceship_group = pygame.sprite.GroupSingle() 
         self.spaceship_group.add(Spaceship(self.screen_width, self.screen_height))
         self.aliens_group = pygame.sprite.Group()
         self.create_aliens()
@@ -18,12 +18,12 @@ class Game:
         self.score = 0
 
     def create_aliens(self):
-        for row in range(5):
+        for row in range(5): #creates a 5 x 11 of aliens
             for column in range(11):
                 x = 90 + column * 65 # cell size
                 y = 132 + row * 65
 
-                if row == 0:
+                if row == 0:      #creating alien types per row
                     alien_type = 3
                 elif row in (1,2):
                     alien_type = 2
@@ -40,10 +40,10 @@ class Game:
         for alien in alien_sprites:
             if alien.rect.right >= self.screen_width:      #if it hits each side, it will move down and move toward the otherside
                 self.aliens_direction = -1
-                self.alien_move_down(7)
+                self.alien_move_down(5)
             elif alien.rect.left <= 0:
                 self.aliens_direction = 1
-                self.alien_move_down(7)
+                self.alien_move_down(5)
 
     def alien_move_down(self, distance):
         if self.aliens_group:
