@@ -3,7 +3,10 @@ import pygame
 class Missile(pygame.sprite.Sprite):
     def __init__(self, position, speed, screen_height):
         super().__init__() #initializes using pygame sprite methods
-        self.image = pygame.image.load("images/alien_missile.png")   #image of the spaceship's missile, when inherited by aliens will change to aliens missile due to direction reasons
+        try:
+            self.image = pygame.image.load("images/alien_missile.png")   #image of the aliens's missile, when inherited by spaceship will change to aliens missile due to direction reasons
+        except pygame.error as e:
+            print(f"Failed to load missile image: {e}")  # print error message
         self.rect = self.image.get_rect(center = position)
         self.speed = speed 
         self.screen_height = screen_height
